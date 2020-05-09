@@ -14,16 +14,16 @@
             "label": "docker buildx & export to docker",
             "type": "shell",
             "command": "docker buildx build --platform linux/amd64 --load --tag $(cat tag) .",
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            },
             "problemMatcher": []
         },
         {
             "label": "docker buildx",
             "type": "shell",
             "command": "docker buildx build --platform linux/arm/v7,linux/amd64 --tag $(cat tag) .",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
             "problemMatcher": []
         },
         {
@@ -36,20 +36,19 @@
         {
             "label": "docker run",
             "type": "shell",
-            "command": "docker run --name icecast-instance-dev --rm -ti -p 8000:8000 $(cat tag)",
+            "command": "docker run --name ices-instance-dev --rm -ti -v /mnt/cifs/muzlo/Bonobo:/media:ro -e STREAM_PASSWORD=blackcatonabed $(cat tag)",
             "problemMatcher": []
         },
         {
             "label": "docker run bash",
             "type": "shell",
-            "command": "docker run --rm -ti -p 8000:8000 --entrypoint=/bin/bash $(cat tag)",
+            "command": "docker run --rm -ti -v /mnt/cifs/muzlo/Bonobo:/media:ro --entrypoint=/bin/bash $(cat tag)",
             "problemMatcher": []
         },
         {
             "label": "docker attach",
             "type": "shell",
-            "command": "docker exec -ti icecast-instance-dev /bin/bash",
-            "problemMatcher": []
+            "command": "docker exec -ti ices-instance-dev /bin/bash"
         },
         {
             "label": "docker push",

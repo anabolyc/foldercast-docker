@@ -1,16 +1,12 @@
 #!/bin/bash
 
-find /media -iname "*.mp3" > /ices-0.4/playlist.txt && \
-/ices-0.4/ices \
-    -C 2 \
-    -D /ices-0.4 \
-    -F /ices-0.4/playlist.txt \
-    -h $STREAM_HOST \
-    -p 8000 \
-    -P $STREAM_PASSWORD \
-    -m $STREAM_PATH \
-    -n $STREAM_NAME \
-    -d $STREAM_DESC \
-    -g $STREAM_GENRE \
-    -r \
-    -v 
+CONFIG=./icecast.xml
+
+sed \
+    -e 's?<source-password>hackme</source-password>?<source-password>'"$ICECAST_PASSWORD"'</source-password>?g' \
+    -e 's?<relay-password>hackme</relay-password>?<relay-password>'"$ICECAST_PASSWORD"'</relay-password>?g' \
+    -e 's?<admin-password>hackme</admin-password>?<admin-password>'"$ICECAST_ADMPASSWORD"'</admin-password>?g' \
+    -e 's?<hostname>localhost</hostname>?<hostname>'"$ICECAST_HOST"'</hostname>?g' \
+    $ICECAST_CONFIG > $CONFIG
+
+/usr/bin/icecast2 -c $CONFIG

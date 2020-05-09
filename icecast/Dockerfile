@@ -12,31 +12,19 @@ RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && \
     /usr/sbin/update-locale LANG=en_US.UTF-8
 ENV LC_ALL en_US.UTF-8
 
-RUN  apt-get install -y build-essential libmp3lame-dev libxml2-dev libshout-dev libvorbis-dev
+RUN  apt-get install -y icecast2
 
-ADD http://downloads.us.xiph.org/releases/ices/ices-0.4.tar.gz /
-RUN tar xf /ices-0.4.tar.gz
-
-WORKDIR /ices-0.4
-
-RUN ./configure --prefix=/usr/local --with-pic --with-lame && make 
-
-FROM debian:buster-slim
-
-RUN  apt-get update && \
-     apt-get install -y libmp3lame-dev libxml2-dev libshout-dev libvorbis-dev
-
-WORKDIR /ices-0.4
-COPY --from=build /ices-0.4/src/ices .
+WORKDIR /icecast2
 ADD start.sh .
-
+RUN chown icecast2 /icecast2 -R
+ 
 EXPOSE 8000
 
-ENV STREAM_PASSWORD "f498f60c-4ca0-4506-b9ac-1b9623d3db6e"
-ENV STREAM_HOST "localhost"
-ENV STREAM_PATH "/listen"
-ENV STREAM_NAME "MY STREAM"
-ENV STREAM_DESC "MY STREAM DESCRIPTION"
-ENV STREAM_GENRE "Everything"
+USER icecast2
+
+ENV ICECAST_PASSWORD "f498f60c-4ca0-4506-b9ac-1b9623d3db6e"
+ENV ICECAST_ADMPASSWORD "b4c6c873-08d1-41b7-adcd-a1d7773c53fa"
+ENV ICECAST_CONFIG /etc/icecast2/icecast.xml
+ENV ICECAST_HOST localhost
 
 CMD ["/bin/bash", "./start.sh"]
