@@ -1,0 +1,58 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "config builder",
+            "type": "shell",
+            "group": "build",
+            "command": "docker run --rm --privileged docker/binfmt:a7996909642ee92942dcd6cff44b9b95f08dad64 ; docker buildx rm mybuilder ; docker buildx create --name mybuilder && docker buildx use mybuilder && docker buildx inspect --bootstrap",
+            "problemMatcher": []
+        },
+        {
+            "label": "docker buildx & export to docker",
+            "type": "shell",
+            "command": "docker buildx build --platform linux/amd64 --load --tag $(cat tag) ."
+        },
+        {
+            "label": "docker buildx",
+            "type": "shell",
+            "command": "docker buildx build --platform linux/arm/v7,linux/amd64 --tag $(cat tag) .",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "docker buildx & push to registry",
+            "type": "shell",
+            "command": "docker buildx build --platform linux/arm/v7,linux/amd64 -t $(cat tag) . --push",
+            "group": "build",
+            "problemMatcher": []
+        },
+        {
+            "label": "docker run",
+            "type": "shell",
+            "command": "docker run --name icecast-instance-dev --rm -ti -v /mnt/cifs/muzlo/Bonobo:/media:ro -p 8000:8000 -e STREAM_PASSWORD=blackcatonabed $(cat tag)",
+            "problemMatcher": []
+        },
+        {
+            "label": "docker run bash",
+            "type": "shell",
+            "command": "docker run --rm -ti -v /mnt/cifs/muzlo/Bonobo:/media:ro -p 8000:8000 --entrypoint=/bin/bash $(cat tag)",
+            "problemMatcher": []
+        },
+        {
+            "label": "docker attach",
+            "type": "shell",
+            "command": "docker exec -ti icecast-instance-dev /bin/bash"
+        },
+        {
+            "label": "docker push",
+            "type": "shell",
+            "command": "docker push $(cat tag)"
+        }
+    ]
+}
