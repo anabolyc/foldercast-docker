@@ -9,8 +9,8 @@ find /media -iname "*.mp3" > /ices-0.4/playlist.txt && \
     -p $STREAM_PORT \
     -P $STREAM_PASSWORD \
     -m $STREAM_PATH \
-    -n $STREAM_NAME \
-    -d $STREAM_DESC \
-    -g $STREAM_GENRE \
+    -n "$STREAM_NAME" \
+    -d "$STREAM_DESC" \
+    -g "$STREAM_GENRE" \
     -r \
     -v 
