@@ -1,0 +1,20 @@
+version: "3.8"
+services:
+  ices:
+    image: "$ICES_IMG"
+    depends_on:
+      - icecast
+    volumes:
+      - "/mnt/cifs/muzlo/Bonobo:/media:ro"
+    environment:
+      STREAM_HOST: icecast
+      STREAM_PATH: /listen
+      STREAM_NAME: "Bonbo - All tracks"
+      STREAM_DESC: "Simon Green (born 1976), known by his stage name Bonobo, is a British musician, producer, and DJ based in Los Angeles"
+      STREAM_GENRE: "Trip Hop"
+  icecast:
+    image: "$ICECAST_IMG"
+    ports:
+      - "8000:8000"
+    environment:
+      ICECAST_HOST: icecast
