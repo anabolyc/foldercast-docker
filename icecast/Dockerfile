@@ -26,5 +26,6 @@ ENV ICECAST_PASSWORD "f498f60c-4ca0-4506-b9ac-1b9623d3db6e"
 ENV ICECAST_ADMPASSWORD "b4c6c873-08d1-41b7-adcd-a1d7773c53fa"
 ENV ICECAST_CONFIG /etc/icecast2/icecast.xml
 ENV ICECAST_HOST localhost
+ENV ICECAST_SRC_LIMIT 10
 
 CMD ["/bin/bash", "./start.sh"]

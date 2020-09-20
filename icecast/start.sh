@@ -3,6 +3,7 @@
 CONFIG=./icecast.xml
 
 sed \
+    -e 's?<sources>2</sources>?<sources>'"$ICECAST_SRC_LIMIT"'</sources>?g' \
     -e 's?<source-password>hackme</source-password>?<source-password>'"$ICECAST_PASSWORD"'</source-password>?g' \
     -e 's?<relay-password>hackme</relay-password>?<relay-password>'"$ICECAST_PASSWORD"'</relay-password>?g' \
     -e 's?<admin-password>hackme</admin-password>?<admin-password>'"$ICECAST_ADMPASSWORD"'</admin-password>?g' \
