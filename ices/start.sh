@@ -1,6 +1,6 @@
 #!/bin/bash
 
-find /media -iname "*.mp3" > /ices-0.4/playlist.txt && \
+find $ROOT_FOLDER -iname "*.mp3" > /ices-0.4/playlist.txt && \
 /ices-0.4/ices \
     -C 2 \
     -D /ices-0.4 \

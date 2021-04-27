@@ -37,5 +37,6 @@ ENV STREAM_PATH "/listen"
 ENV STREAM_NAME "MY STREAM"
 ENV STREAM_DESC "MY STREAM DESCRIPTION"
 ENV STREAM_GENRE "Everything"
+ENV ROOT_FOLDER "/media"
 
 CMD ["/bin/bash", "./start.sh"]
