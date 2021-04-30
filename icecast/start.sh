@@ -10,4 +10,6 @@ sed \
     -e 's?<hostname>localhost</hostname>?<hostname>'"$ICECAST_HOST"'</hostname>?g' \
     $ICECAST_CONFIG > $CONFIG
 
+cat $CONFIG
+
 /usr/bin/icecast2 -c $CONFIG
